@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sinc.board">
+	<select id="selectAll" resultType="board">
+		SELECT	 SEQ, TITLE, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
+		FROM 	 SPRING_BOARD_TBL
+		ORDER BY SEQ DESC
+	</select>
+	<select id="selectOne" parameterType="board" resultType="board">
+		SELECT	 SEQ, TITLE, CONTENT, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
+		FROM	 SPRING_BOARD_TBL
+		WHERE	 SEQ = #{ seq }
+	</select>
+	<select id="insertBoard" parameterType="board" resultType="int">
+		INSERT 	 INTO SPRING_BOARD_TBL
+				 (SEQ, TITLE, CONTENT, WRITER, REGDATE, VIEWCNT)
+		VALUES   (BOARD_SEQ.NEXTVAL, #{ title }, #{ content }, #{ writer }, DEFAULT, DEFAULT)
+	</select>
+	<select id="searchAjax" parameterType="map" resultType="board">
+		SELECT	 SEQ, TITLE, CONTENT, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
+		FROM	 SPRING_BOARD_TBL
+		<where>
+			<if test="type == 'title'">
+				TITLE LIKE '%'||#{ keyword }||'%'
+			</if>
+			<if test="type == 'writer'">
+				WRITER LIKE '%'||#{ keyword }||'%'
+			</if>
+		</where>
+	</select>
+</mapper>  
+
+
+
+
+
+
+
+
+
+
+
