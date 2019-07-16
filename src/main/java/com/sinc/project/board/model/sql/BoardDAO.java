@@ -12,5 +12,9 @@ public interface BoardDAO {
 
 	int insertBoard(BoardVO vo);
 	
+	int updateBoard(BoardVO vo);
+	
+	int deleteBoard(BoardVO vo);
+	
 	List<BoardVO> searchRow(Map<String, String> map);
 }

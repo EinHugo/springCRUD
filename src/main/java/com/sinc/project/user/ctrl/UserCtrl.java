@@ -15,7 +15,7 @@ import com.sinc.project.test.service.UserServiceImpl;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes({"loginUser"})
+/* @SessionAttributes({"loginUser"}) */
 public class UserCtrl {
 
 	@Resource(name = "userServiceImpl")
@@ -27,24 +27,25 @@ public class UserCtrl {
 	}
 
 	@RequestMapping(value = "logout.sinc")
-	public String logout(SessionStatus status) {
-		System.out.println("UserCtrl#logout");
+	public String logout(SessionStatus status, HttpSession session) {
 		
+		System.out.println("UserCtrl#logout");
 		status.setComplete();
+		session.invalidate();
 		return "redirect:/index.sinc";
+		
 	}
 	
 	@RequestMapping(value = "/login.sinc", method = RequestMethod.POST)
-	public String login(UserVO user, Model model) {
+	public void login(UserVO user, Model model) {
 
 		UserVO result = service.loginService(user);
 		if (result != null) {
-			model.addAttribute("loginUser", result);
-			return "redirect:/";
+			model.addAttribute("user", result);
+			
 		} else {
 			System.out.println("result fail");
 			model.addAttribute("user", user);
-			return "user/login";
 		}
 	}
 }

@@ -10,12 +10,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+			throws Exception {	
+		
 		System.out.println("AuthInterceptor#preHandle");
+		
 		HttpSession session = request.getSession();
 		String path = "/user/loginForm.sinc";
 		
+		
 		if(session.getAttribute("loginUser") == null) {
+			savePath(request);
 			response.sendRedirect(path);
 			return false;
 		}
@@ -23,4 +27,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 	
+	public void savePath(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		String queryString = request.getQueryString();
+		
+		if(queryString == null || queryString.equals("null")) {
+			queryString = "";
+		} else {
+			queryString = "?" + queryString;
+		}
+		request.getSession().setAttribute("savePath", uri+queryString);
+		System.out.println(uri+queryString);
+	}
 }

@@ -31,15 +31,14 @@
 			</if>
 		</where>
 	</select>
+	<select id="updateBoard" parameterType="board" resultType="int">
+		UPDATE 	SPRING_BOARD_TBL
+		SET	 	TITLE = #{ title }, CONTENT=#{ content }
+		WHERE	SEQ = #{ seq }
+	</select>
+	<select id="deleteBoard" parameterType="board" resultType="int">
+		DELETE	 FROM SPRING_BOARD_TBL
+		WHERE	 SEQ = #{ seq }
+	</select>
 </mapper>  
-
-
-
-
-
-
-
-
-
-
 

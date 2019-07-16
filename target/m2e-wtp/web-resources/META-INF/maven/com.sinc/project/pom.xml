@@ -67,6 +67,16 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>1.9.2</version>
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
@@ -172,7 +182,6 @@
 		    <artifactId>ojdbc6</artifactId>
 		    <version>11.2.0.4.0-atlassian-hosted</version>
 		</dependency>
-
 
 		<!-- json 추가 -->		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->

@@ -44,7 +44,7 @@
   </div><!-- /.box-body -->
 
   <div class="box-footer">
-	<c:if test="${ loginUser.uname == board.writer }">
+	<c:if test="${ loginUser.id == board.writer }">
 	<button id="modify" type="button" class="btn btn-warning">Modify</button> 
 	<button id="remove" type="button" class="btn btn-danger">REMOVE</button> 
     </c:if>
@@ -83,12 +83,15 @@
 		</ul>
 		<!--  -->
 		<ul id="rlist">
+			<!-- TODO 댓글 기능 구현시 필요 -->
+			<c:if test="false">
 				<c:forEach items="${board.rlist}" var="reply">
 					
 					<li class="time-label">${reply.rcontent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="javascript:removeReply(${reply.rseq},${reply.bno})">X</a>
 					</li>
 				</c:forEach>
+			</c:if>
 		</ul>
 		<!--  -->   
 			<div class='text-center'>
@@ -128,13 +131,14 @@
 
 	$(document).ready(function() {
 		$("#list").click(function() {
-			location.href="listPage" ; 
+			location.href="listPage.sinc" ; 
 		});
+		
 		$("#remove").click(function() {
-			location.href="removePage?bno="+${board.bno} ; 
+			location.href="removePage.sinc?seq="+${board.seq} ; 
 		});
 		$("#modify").click(function() {
-			location.href="modifyPage?bno="+${board.bno} ; 
+			location.href="modifyPage.sinc?seq="+${board.seq} ; 
 		});
 		
 		$("#replyAddBtn").click(function() {
@@ -143,7 +147,7 @@
 				type : "post" , 
 				data : {rwriter : $("#newReplyWriter").val() ,
 					    rcontent : $("#newReplyText").val()  , 
-					    bno : ${board.bno}
+					    seq : ${board.seq}
 					   } ,
 				dataType : "json" , 
 				success : function(ary) {
@@ -168,8 +172,8 @@ $(document).ready(function(){
 	
 	console.log(formObj);
 	
-	if(${boardVO.writer==sessionScope.loginUser.uname}
-	  || ${sessionScope.loginUser.uname=='관리자'}){
+	if(${boardVO.writer==sessionScope.loginUser.name}
+	  || ${sessionScope.loginUser.name=='관리자'}){
 		$(".box-footer").html(
 				'<button type="submit" class="btn btn-warning">Modify</button> '
 			   +'<button type="submit" class="btn btn-danger">REMOVE</button> '

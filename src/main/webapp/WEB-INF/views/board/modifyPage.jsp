@@ -15,7 +15,7 @@
 				</div>
 				<!-- /.box-header -->
 
-				<form role="form" action="modifyPage" method="post">
+				<form role="form" action="modifyPage.sinc" method="post">
 
 					<input type='hidden' name='page' value="${cri.page}"> <input
 						type='hidden' name='perPageNum' value="${cri.perPageNum}">
@@ -23,8 +23,8 @@
 					<div class="box-body">
 
 						<div class="form-group">
-							<label for="exampleInputEmail1">BNO</label> <input type="text"
-								name='bno' class="form-control" value="${board.bno}"
+							<label for="exampleInputEmail1">SEQ</label> <input type="text"
+								name='seq' class="form-control" value="${board.seq}"
 								readonly="readonly">
 						</div>
 
@@ -46,7 +46,7 @@
 				
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">SAVE</button>
-					<button type="submit" class="btn btn-warning">CANCEL</button>
+					<button id="cancel" type="submit" class="btn btn-warning">CANCEL</button>
 				</div>
 				</form>
 				<script>

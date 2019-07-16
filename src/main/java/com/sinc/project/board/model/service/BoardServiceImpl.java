@@ -33,6 +33,16 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> searchService(Map<String, String> map) {
 		return dao.searchRow(map);
 	}
+
+	@Override
+	public int update(BoardVO vo) {
+		return dao.updateBoard(vo);
+	}
+
+	@Override
+	public int delete(BoardVO vo) {
+		return dao.deleteBoard(vo);
+	}
 	
 
 }

@@ -25,6 +25,7 @@
 	
 	<beans:bean id="sampleInter" class="com.sinc.project.interceptor.TestInterceptor"/>
 	<beans:bean id="auth" class="com.sinc.project.board.util.AuthInterceptor"/>
+	<beans:bean id="login" class="com.sinc.project.board.util.LoginInterceptor" />
 	
 	<interceptors>
 		<!-- <interceptor>
@@ -34,6 +35,10 @@
 		<interceptor>
 			<mapping path="/board/register.sinc"/>
 			<beans:ref bean="auth"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/user/login.sinc"/>
+			<beans:ref bean="login"/>
 		</interceptor>
 	</interceptors>
 </beans:beans>

@@ -34,6 +34,16 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardVO> searchRow(Map<String, String> map) {
 		return session.selectList("com.sinc.board.searchAjax", map);
 	}
+
+	@Override
+	public int updateBoard(BoardVO vo) {
+		return session.update("com.sinc.board.updateBoard", vo);
+	}
+
+	@Override
+	public int deleteBoard(BoardVO vo) {
+		return session.delete("com.sinc.board.deleteBoard", vo);
+	}
 	
 
 }

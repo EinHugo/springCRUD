@@ -29,13 +29,15 @@ public class BoardCtrl {
 	}
 	
 	@RequestMapping("/readPage.sinc")
-	public String detailPage(@RequestParam int seq) {
+	public String detailPage(@RequestParam int seq, Model model) {
 		
 		BoardVO vo = new BoardVO(seq);
 		/*
 		 * Map<String, Integer> map = new HashMap<String, Integer>(); map.put("seq",
 		 * seq);
 		 */
+		BoardVO board = service.selectOne(vo);
+		model.addAttribute("board", board);
 		return "/board/readPage";
 	}
 	
@@ -49,8 +51,39 @@ public class BoardCtrl {
 		if(result != 0 ) {
 			return "redirect:/board/listPage.sinc";
 		} else {
-			return "/board/register";
+			return "/board/register.sinc";
 		}
+	}
+	
+	@RequestMapping(value="/modifyPage.sinc", method=RequestMethod.GET)
+	public String modifyPage(BoardVO vo, Model model) {
+		System.out.println("modifyPage.sinc");
+		BoardVO board = service.selectOne(vo);
+		model.addAttribute("board", board);
+		return "/board/modifyPage";
+	}
+	
+	@RequestMapping(value="/modifyPage.sinc", method=RequestMethod.POST)
+	public String modifyPage(BoardVO vo) {
+		
+		int result = service.update(vo);
+		if(result != 0) {
+			return "redirect:/board/readPage.sinc?seq=" + vo.getSeq();
+		} else {
+			return "redirect:/board";
+		}
+	}
+	
+	@RequestMapping("/removePage.sinc")
+	public String removePage(BoardVO vo) {
+		System.out.println("removePage.sinc");
+		int result = service.delete(vo);
+		if(result != 0) {
+			return "redirect:/board/listPage.sinc";
+		} else {
+			return "redirect:/board/readPage.sinc?seq=" + vo.getSeq();
+		}
+		
 	}
 	
 	@RequestMapping(value="/search.sinc", method=RequestMethod.POST)

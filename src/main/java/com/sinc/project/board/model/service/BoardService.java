@@ -9,5 +9,7 @@ public interface BoardService {
 	public List<? extends Object> selectAll();
 	public Object selectOne(BoardVO obj);
 	public int insert(BoardVO obj);
+	public int update(BoardVO obj);
+	public int delete(BoardVO obj);
 	public List<BoardVO> searchService(Map<String, String> map);
 }
