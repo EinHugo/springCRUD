@@ -32,13 +32,10 @@ public class BoardCtrl {
 	public String detailPage(@RequestParam int seq, Model model) {
 		
 		BoardVO vo = new BoardVO(seq);
-		/*
-		 * Map<String, Integer> map = new HashMap<String, Integer>(); map.put("seq",
-		 * seq);
-		 */
 		BoardVO board = service.selectOne(vo);
 		model.addAttribute("board", board);
 		return "/board/readPage";
+		
 	}
 	
 	@RequestMapping(value="/register.sinc", method=RequestMethod.GET)

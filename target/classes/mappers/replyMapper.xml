@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sinc.reply">
+	<select id="selectAllReply" parameterType="int" resultType="reply" >
+		SELECT RWRITER, RTEXT, TO_CHAR(RDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS RDATE
+		FROM SPRING_BOARD_REPLY_TBL
+		WHERE SEQ = { seq };
+	</select>
+	<select id="insertReply" parameterType="reply" resultType="int" >
+		INSERT INTO SPRING_BOARD_REPLY_TBL 
+		(RSEQ, SEQ, RWRITER, RTEXT, RDATE)
+		VALUES 
+		(BOARD_REPLY_SEQ.NEXTVAL, #{ seq }, #{ rwriter }, #{ rtext }, DEFAULT)
+	</select>
+</mapper>  

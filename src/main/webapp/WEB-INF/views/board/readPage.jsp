@@ -142,11 +142,16 @@
 		});
 		
 		$("#replyAddBtn").click(function() {
+			
+			console.log("${ board.seq }");
+			console.log($("#newReplyWriter").val());
+			console.log($("#newReplyText").val());
+			
 			$.ajax({
-				url  : "replyInsert" , 
+				url  : "replyInsert.sinc" , 
 				type : "post" , 
 				data : {rwriter : $("#newReplyWriter").val() ,
-					    rcontent : $("#newReplyText").val()  , 
+					    rtext : $("#newReplyText").val()  , 
 					    seq : ${board.seq}
 					   } ,
 				dataType : "json" , 
@@ -160,7 +165,7 @@
 					});
 					$("#rlist").append(txt);
 				}
-			});
+			}); 
 			/////////
 		});
 	});

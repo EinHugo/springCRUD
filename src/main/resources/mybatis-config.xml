@@ -7,6 +7,7 @@
 		<typeAlias type="com.sinc.project.test.model.vo.TestVO" alias="test"/>
 		<typeAlias type="com.sinc.project.test.model.vo.UserVO" alias="user"/>
 		<typeAlias type="com.sinc.project.model.model.vo.BoardVO" alias="board"/>
+		<typeAlias type="com.sinc.project.model.model.vo.ReplyVO" alias="reply"/>
 	</typeAliases>
 </configuration>
 

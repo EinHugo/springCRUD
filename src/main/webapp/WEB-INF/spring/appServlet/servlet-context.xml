@@ -37,6 +37,10 @@
 			<beans:ref bean="auth"/>
 		</interceptor>
 		<interceptor>
+			<mapping path="/board/replyInsert.sinc"/>
+			<beans:ref bean="auth"/>
+		</interceptor>
+		<interceptor>
 			<mapping path="/user/login.sinc"/>
 			<beans:ref bean="login"/>
 		</interceptor>
