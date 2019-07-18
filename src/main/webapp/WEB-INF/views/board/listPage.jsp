@@ -47,7 +47,7 @@
 
 							<tr>
 								<td>${boardVO.seq}</td>
-	<td><a  href='readPage.sinc?seq=${boardVO.seq}'>${boardVO.title}</a></td>
+	<td><a  href='readPage.sinc?seq=${boardVO.seq}'>${boardVO.title} (${ boardVO.rcount-1 })</a></td>
 								<td>${boardVO.writer}</td>
 								<td>${boardVO.regdate}</td>
 								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
@@ -134,7 +134,7 @@
 				var txt = "";
 				$.each(data , function(idx, obj) {
 					txt +="<tr><td>"+obj.seq+"</td>" ; 
-					txt +="<td><a href='readPage?bno="+obj.seq+"'>"+obj.title+"</a></td>";
+					txt +="<td><a href='readPage?bno="+obj.seq+"'>"+obj.title+ "</a></td>";
 					txt +="<td>"+obj.writer+"</td>";
 					txt +="<td>"+obj.regdate+"</td>";
 					txt +="<td><span class='badge bg-red'>"+obj.viewcnt+"</span></td></tr>" ; 

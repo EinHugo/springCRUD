@@ -16,9 +16,8 @@ public class ReplyServiceImpl implements ReplyService {
 	ReplyDAOImpl dao;
 	
 	@Override
-	public List<? extends Object> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<? extends Object> selectAll(int seq) {
+		return dao.selectAllReply(seq);
 	}
 
 	@Override

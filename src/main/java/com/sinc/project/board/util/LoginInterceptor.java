@@ -22,9 +22,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		ModelMap model = modelAndView.getModelMap();
 		
 		Object obj = model.get("user");
+		System.out.println(obj);
 		
 		if(obj != null) {
-			
+			System.out.println(obj);
 			System.out.println("Interceptor Success");
 			session.setAttribute("loginUser", obj);
 			// 세션이 중간에 만료될 때를 대비해서 dest 가 빈 값인지 체크한다.
@@ -33,6 +34,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			 * if(dest == null) { dest = request.getHeader("referer"); }
 			 */
 			String path = (dest == null) ?  "/" : dest;
+			
+			
 			
 			response.sendRedirect(path);
 			

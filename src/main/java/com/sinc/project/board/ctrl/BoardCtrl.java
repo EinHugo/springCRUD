@@ -2,8 +2,11 @@ package com.sinc.project.board.ctrl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sinc.project.board.model.service.BoardServiceImpl;
 import com.sinc.project.model.model.vo.BoardVO;
+import com.sinc.project.test.model.vo.UserVO;
 
 @Controller
 @RequestMapping("/board")
@@ -25,14 +29,33 @@ public class BoardCtrl {
 	public String listPage(Model model) {
 		List<BoardVO> list = service.selectAll();
 		model.addAttribute("list", list);
+		
+		
+	  Map<String, Integer> param = new HashMap(); param.put("firstPageNo", 1);
+	  param.put("prevPageNo", 2); param.put("startPageNo", 4);
+	  param.put("endPageNo", 8); param.put("nextPageNo", 9);
+	  param.put("finalPageNo", 10);
+		  
+	model.addAttribute("param", param); 
+		
 		return "/board/listPage";
 	}
 	
 	@RequestMapping("/readPage.sinc")
-	public String detailPage(@RequestParam int seq, Model model) {
+	public String detailPage(@RequestParam int seq, Model model, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginUser") != null) {
+			model.addAttribute("userSignedIn", true);
+			model.addAttribute("currentUser", (UserVO)(session.getAttribute("loginUser")));
+		} else {
+			model.addAttribute("userSignedIn", false);
+		}
 		
 		BoardVO vo = new BoardVO(seq);
 		BoardVO board = service.selectOne(vo);
+		System.out.println(board.getRlist());
+		
 		model.addAttribute("board", board);
 		return "/board/readPage";
 		

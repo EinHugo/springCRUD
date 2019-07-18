@@ -17,5 +17,20 @@ public class UserDAOImpl implements UserDAO {
 	public UserVO loginRow(UserVO user) {
 		return session.selectOne("com.sinc.user.loginRow", user);
 	}
+
+	@Override
+	public int join(UserVO user) {
+		UserVO userExists = session.selectOne("com.sinc.user.selectOneUser", user);
+		int result;
+		if(userExists != null) {
+			System.out.println("user already exists");
+			result = -1;
+		} else {
+			result = session.insert("com.sinc.user.join", user);
+		}
+		return result;
+	}
+	
+	
 	
 }

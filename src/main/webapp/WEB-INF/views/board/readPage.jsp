@@ -58,17 +58,20 @@
 				<div class="box-header">
 					<h3 class="box-title">ADD NEW REPLY</h3>
 				</div>
-				<div class="box-body">
-					<label for="exampleInputEmail1">Writer</label> 
-					<input class="form-control" type="text" placeholder="USER ID"    id="newReplyWriter"> 
-					<label for="exampleInputEmail1">Reply Text</label> 
-					<input class="form-control" type="text" placeholder="REPLY TEXT" id="newReplyText">
-
-				</div>
-				<!-- /.box-body -->
-				<div class="box-footer">
-					<button type="button" class="btn btn-primary" id="replyAddBtn">ADD REPLY</button>
-				</div>
+				 
+				<c:if test="${ userSignedIn }">
+					<div class="box-body">
+						<label for="exampleInputEmail1">Writer</label> 
+						<input class="form-control" type="text" placeholder="USER ID"    id="newReplyWriter" 
+							value='${ currentUser.id }' readonly="readonly"> 
+						<label for="exampleInputEmail1">Reply Text</label> 
+						<input class="form-control" type="text" placeholder="REPLY TEXT" id="newReplyText">
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<button type="button" class="btn btn-primary" id="replyAddBtn">ADD REPLY</button>
+					</div>
+				</c:if>
 			</div>
 
 		
@@ -84,14 +87,16 @@
 		<!--  -->
 		<ul id="rlist">
 			<!-- TODO 댓글 기능 구현시 필요 -->
-			<c:if test="false">
-				<c:forEach items="${board.rlist}" var="reply">
-					
-					<li class="time-label">${reply.rcontent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="javascript:removeReply(${reply.rseq},${reply.bno})">X</a>
-					</li>
-				</c:forEach>
-			</c:if>
+			
+			<c:forEach items="${board.rlist}" var="reply">
+				
+				<li class="time-label">
+					${reply.rwriter} : 
+					${reply.rtext}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:removeReply(${reply.rseq},${reply.seq})">X</a>
+				</li>
+			</c:forEach>
+			
 		</ul>
 		<!--  -->   
 			<div class='text-center'>
@@ -119,7 +124,7 @@
 				$("#rlist").empty(); // remove() 
 				var txt = "";
 				$.each(ary , function(idx, obj) {
-					txt += "<li class='time-label'>"+obj.rcontent;
+					txt += "<li class='time-label'>"+obj.rtext;
 					txt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 					txt += "<a href='javascript:removeReply("+obj.rseq+","+obj.bno+")'>X</a></li>";
 				});
@@ -142,31 +147,35 @@
 		});
 		
 		$("#replyAddBtn").click(function() {
-			
-			console.log("${ board.seq }");
-			console.log($("#newReplyWriter").val());
-			console.log($("#newReplyText").val());
-			
-			$.ajax({
-				url  : "replyInsert.sinc" , 
-				type : "post" , 
-				data : {rwriter : $("#newReplyWriter").val() ,
-					    rtext : $("#newReplyText").val()  , 
-					    seq : ${board.seq}
-					   } ,
-				dataType : "json" , 
-				success : function(ary) {
-					$("#rlist").empty(); // remove() 
-					var txt = "";
-					$.each(ary , function(idx, obj) {
-						txt += "<li class='time-label'>"+obj.rcontent;
-						txt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-						txt += "<a href='javascript:removeReply("+obj.rseq+","+obj.bno+")'>X</a></li>";
-					});
-					$("#rlist").append(txt);
-				}
-			}); 
-			/////////
+			let userSignedIn = <%= (session.getAttribute("loginUser")!=null) %>;
+			if($("#newReplyText").val() == ""){
+				alert("내용을 입력해 주세요.");
+			}
+			else if(userSignedIn) {
+				$.ajax({
+					url  : "replyInsert.sinc" , 
+					type : "post" , 
+					data : {rwriter : $("#newReplyWriter").val() ,
+						    rtext : $("#newReplyText").val()  , 
+						    seq : ${board.seq}
+						   } ,
+					dataType : "json" , 
+					success : function(ary) {
+						$("#newReplyText").val("");
+						$("#rlist").empty(); // remove() 
+						var txt = "";
+						$.each(ary , function(idx, obj) {
+							txt += "<li class='time-label'>"+ obj.rwriter + ":" +  obj.rtext;
+							txt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+							txt += "<a href='javascript:removeReply("+obj.rseq+","+obj.bno+")'>X</a></li>";
+						});
+						$("#rlist").append(txt);
+					}
+				});
+			} else {
+				// 로그인 되지 않았을 때
+				window.location.href="/user/loginForm.sinc";
+			}
 		});
 	});
 

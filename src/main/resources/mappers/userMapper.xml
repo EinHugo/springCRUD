@@ -10,6 +10,19 @@
 		FROM	  SPRING_MEM_TBL
 		WHERE	  ID = #{ id } AND PWD = #{ pwd }
 	</select>
+	<select id="selectOneUser" parameterType="com.sinc.project.test.model.vo.UserVO" 
+						resultType="com.sinc.project.test.model.vo.UserVO">
+		SELECT    ID, PWD, NAME, POINT, IMGSRC
+		FROM	  SPRING_MEM_TBL
+		WHERE	  ID = #{ id }
+	</select>
+	<select id="join" parameterType="com.sinc.project.test.model.vo.UserVO" 
+					resultType="int">
+		INSERT INTO SPRING_MEM_TBL 
+		(ID, PWD, NAME, POINT, IMGSRC)
+		VALUES
+		(#{id}, #{pwd}, #{name}, DEFAULT, DEFAULT)
+	</select>
 </mapper>  
 
 

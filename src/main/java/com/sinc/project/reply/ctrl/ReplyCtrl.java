@@ -25,9 +25,6 @@ public class ReplyCtrl {
 	@RequestMapping("/replyInsert.sinc")
 	public @ResponseBody List<ReplyVO> replyInsert(ReplyVO vo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("ReplyCtrl#replyInsert");
-		
-		System.out.println(vo);
-		
 		// 로그인 처리는 LoginInterceptor 에서 처리하였음
 		
 		HttpSession session = request.getSession();
@@ -43,6 +40,8 @@ public class ReplyCtrl {
 			// success
 			System.out.println("Reply insert Success");
 			int seq = vo.getSeq();
+			List<ReplyVO> replies = (List<ReplyVO>) service.selectAll(seq);
+			return replies;
 			
 		} else {
 			System.out.println("Reply insert Fail");

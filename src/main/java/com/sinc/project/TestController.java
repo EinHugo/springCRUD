@@ -29,8 +29,6 @@ public class TestController {
 	@RequestMapping("/index.sinc")
 	public String main(Model model) {
 		
-		System.out.println("test main");
-		model.addAttribute("msg", "HI");
 		
 		return "home";
 	}

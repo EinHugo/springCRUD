@@ -1,12 +1,44 @@
 package com.sinc.project.model.model.vo;
 
+import java.util.List;
+
 public class BoardVO {
 	private int 	seq;
 	private String  title, content, writer, regdate;
 	private int		viewcnt;
+	private int 	rcount;
+	public int getRcount() {
+		return rcount;
+	}
 
+	public BoardVO(int seq, String title, String content, String writer, String regdate, int viewcnt, int rcount,
+			List<ReplyVO> rlist) {
+		super();
+		this.seq = seq;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.regdate = regdate;
+		this.viewcnt = viewcnt;
+		this.rcount = rcount;
+		this.rlist = rlist;
+	}
+
+	public void setRcount(int rcount) {
+		this.rcount = rcount;
+	}
+
+	private List<ReplyVO> rlist;
 	
 	public BoardVO() {}
+
+	public List<ReplyVO> getRlist() {
+		return rlist;
+	}
+
+	public void setRlist(List<ReplyVO> rlist) {
+		this.rlist = rlist;
+	}
 
 	public BoardVO(int seq) {
 		this.seq = seq;

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.sinc.project.model.model.vo.BoardVO;
+import com.sinc.project.model.model.vo.ReplyVO;
 
 @Service("boardDAOImpl")
 public class BoardDAOImpl implements BoardDAO {
@@ -22,7 +23,10 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public BoardVO selectOneBoard(BoardVO vo) {
-		return session.selectOne("com.sinc.board.selectOne", vo);
+		List<ReplyVO> replies = session.selectList("com.sinc.reply.selectAllReply", vo.getSeq());
+		BoardVO result = session.selectOne("com.sinc.board.selectOne", vo);
+		result.setRlist(replies);
+		return result;
 	}
 	
 	@Override 

@@ -17,5 +17,12 @@ public class UserServiceImpl implements UserService {
 	public UserVO loginService(UserVO user) {
 		return dao.loginRow(user);
 	}
+
+	@Override
+	public int join(UserVO user) {
+		return dao.join(user);
+	}
+	
+	
 	
 }

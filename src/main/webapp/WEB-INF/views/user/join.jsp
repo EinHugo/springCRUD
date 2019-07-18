@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,15 +39,24 @@
 		<!-- /.login-logo -->
 		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
-
-			<form action="join.sinc" method="post" enctype="multipart/form-data">
+			<c:if test='${ msg != null }'>
+				<p>${ msg }</p>
+			</c:if>
+			
+			<!-- <form id="loginForm" action="join.sinc" method="post" enctype="multipart/form-data"> -->
+			<form id="loginForm" action="join.sinc" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" name="id" class="form-control"
 						placeholder="USER ID" /> <span
 						class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input type="password" name="pwd" class="form-control"
+					<input type="password" id="pwd" name="pwd" class="form-control"
+						placeholder="Password" /> <span
+						class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" id="pwd2" class="form-control"
 						placeholder="Password" /> <span
 						class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
@@ -55,13 +66,13 @@
 					<span class="glyphicon glyphicon-user form-control-feedback"></span>
 				</div>
 				
-				<div class="form-group has-feedback">
+				<!-- <div class="form-group has-feedback">
 					<input type="file" name="file" class="form-control" /> 
 					<span class="glyphicon glyphicon-picture form-control-feedback"></span>
-				</div>
+				</div> -->
 				<div class="row">
 			    <div class="col-xs-12">
-			      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+			      <button id="submitBtn" type="button" class="btn btn-primary btn-block">Sign In</button>
 			    </div><!-- /.col -->
 			  </div>
 			</form>
@@ -80,7 +91,22 @@
 	<script src="/resources/plugins/iCheck/icheck.min.js"
 		type="text/javascript"></script>
 	<script>
+	
+	
       $(function () {
+    	  
+    	$('#submitBtn').click(function(){
+    		let pwd = $('#pwd').val();
+    		let pwd2 = $('#pwd2').val();
+    		if(pwd != pwd2) {
+    			alert("비밀번호를 확인하세요;");
+    		} else {
+    			$('#loginForm').submit();	
+    		}
+    		
+    		
+    	});
+    	  
         $('input').iCheck({
           checkboxClass: 'icheckbox_square-blue',
           radioClass: 'iradio_square-blue',
