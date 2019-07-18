@@ -43,6 +43,11 @@ public class BoardServiceImpl implements BoardService {
 	public int delete(BoardVO vo) {
 		return dao.deleteBoard(vo);
 	}
+
+	@Override
+	public int addViewCnt(BoardVO obj) {
+		return dao.addViewCount(obj);
+	}
 	
 
 }

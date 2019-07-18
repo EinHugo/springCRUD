@@ -18,6 +18,11 @@
 		ORDER BY SPRING_BOARD_TBL.seq   DESC
 		
 	</select>
+	<select id="addViewCount" resultType="int">
+		UPDATE	SPRING_BOARD_TBL
+		SET VIEWCNT = NVL(VIEWCNT, 0) + 1
+		WHERE SEQ = #{ seq }
+	</select>
 	<select id="selectOne" parameterType="board" resultType="board">
 		SELECT	 SEQ, TITLE, CONTENT, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
 		FROM	 SPRING_BOARD_TBL

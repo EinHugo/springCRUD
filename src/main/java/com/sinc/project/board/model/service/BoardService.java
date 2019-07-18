@@ -11,5 +11,6 @@ public interface BoardService {
 	public int insert(BoardVO obj);
 	public int update(BoardVO obj);
 	public int delete(BoardVO obj);
+	public int addViewCnt(BoardVO obj);
 	public List<? extends Object> searchService(Map<String, String> map);
 }

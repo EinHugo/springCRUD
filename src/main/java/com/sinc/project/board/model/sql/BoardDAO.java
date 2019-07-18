@@ -16,5 +16,7 @@ public interface BoardDAO {
 	
 	int deleteBoard(BoardVO vo);
 	
+	int addViewCount(BoardVO vo);
+	
 	List<BoardVO> searchRow(Map<String, String> map);
 }

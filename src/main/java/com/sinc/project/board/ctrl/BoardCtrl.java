@@ -31,12 +31,12 @@ public class BoardCtrl {
 		model.addAttribute("list", list);
 		
 		
-	  Map<String, Integer> param = new HashMap(); param.put("firstPageNo", 1);
-	  param.put("prevPageNo", 2); param.put("startPageNo", 4);
-	  param.put("endPageNo", 8); param.put("nextPageNo", 9);
-	  param.put("finalPageNo", 10);
-		  
-	model.addAttribute("param", param); 
+		/*
+		 * Map<String, Integer> param = new HashMap(); param.put("firstPageNo", 1);
+		 * param.put("prevPageNo", 2); param.put("startPageNo", 4);
+		 * param.put("endPageNo", 8); param.put("nextPageNo", 9);
+		 * param.put("finalPageNo", 10);
+		 */
 		
 		return "/board/listPage";
 	}
@@ -52,8 +52,11 @@ public class BoardCtrl {
 			model.addAttribute("userSignedIn", false);
 		}
 		
+		
+		
 		BoardVO vo = new BoardVO(seq);
 		BoardVO board = service.selectOne(vo);
+		service.addViewCnt(board);
 		System.out.println(board.getRlist());
 		
 		model.addAttribute("board", board);

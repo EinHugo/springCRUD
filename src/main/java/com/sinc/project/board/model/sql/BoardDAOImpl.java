@@ -48,6 +48,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public int deleteBoard(BoardVO vo) {
 		return session.delete("com.sinc.board.deleteBoard", vo);
 	}
+
+	@Override
+	public int addViewCount(BoardVO vo) {
+		System.out.println("addViewCount");
+		return session.update("com.sinc.board.addViewCount", vo);
+	}
 	
 
 }

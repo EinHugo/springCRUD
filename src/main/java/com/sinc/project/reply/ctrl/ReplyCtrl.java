@@ -45,8 +45,6 @@ public class ReplyCtrl {
 			
 		} else {
 			System.out.println("Reply insert Fail");
-			
-			
 		}
 		
 		return null;
