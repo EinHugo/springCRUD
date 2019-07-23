@@ -8,6 +8,7 @@
 		<typeAlias type="com.sinc.project.test.model.vo.UserVO" alias="user"/>
 		<typeAlias type="com.sinc.project.model.model.vo.BoardVO" alias="board"/>
 		<typeAlias type="com.sinc.project.model.model.vo.ReplyVO" alias="reply"/>
+		<typeAlias type="com.sinc.project.pagination.Criteria" alias="criteria"/>
 	</typeAliases>
 </configuration>
 

@@ -31,10 +31,13 @@
       <input type="text" name='title' class="form-control" 
          value="${board.title}" readonly="readonly">
     </div>
+    
     <div class="form-group">
       <label for="exampleInputPassword1">Content</label>
-      <textarea class="form-control"  name="content" rows="3" 
-      readonly="readonly">${board.content}</textarea>
+      <%-- <textarea class="form-control"  name="content" rows="3" 
+      readonly="readonly">${board.content}</textarea> --%>
+      <br><br>
+      <c:out value="${board.content}" escapeXml="false" />
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1" >Writer</label>
@@ -91,8 +94,9 @@
 			<c:forEach items="${board.rlist}" var="reply">
 				
 				<li class="time-label">
-					${reply.rwriter} : 
-					${reply.rtext}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					${reply.rwriter} : ${reply.rtext}
+					<%-- ${reply.rtext} --%>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:removeReply(${reply.rseq},${reply.seq})">X</a>
 				</li>
 			</c:forEach>

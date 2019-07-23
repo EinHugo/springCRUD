@@ -3,20 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
+  
+  
 <mapper namespace="com.sinc.board">
-	<select id="selectAll" resultType="board">
-		SELECT	 SPRING_BOARD_TBL.SEQ, 
-				 SPRING_BOARD_TBL.TITLE, 
-				 SPRING_BOARD_TBL.WRITER, 
-				 REGDATE, 
-				 SPRING_BOARD_TBL.VIEWCNT,
-				 COUNT(SPRING_BOARD_TBL.SEQ) AS RCOUNT
-		FROM 	 SPRING_BOARD_TBL
-		FULL JOIN SPRING_BOARD_REPLY_TBL
-		ON        SPRING_BOARD_TBL.seq = SPRING_BOARD_REPLY_TBL.seq
-		GROUP BY SPRING_BOARD_TBL.seq, SPRING_BOARD_TBL.TITLE, SPRING_BOARD_TBL.WRITER, REGDATE, SPRING_BOARD_TBL.VIEWCNT
-		ORDER BY SPRING_BOARD_TBL.seq   DESC
-		
+
+	<select id="countBoard" resultType="int">
+
+        SELECT COUNT(*)
+
+        FROM SPRING_BOARD_TBL
+
+    </select>
+
+	<select id="selectAll" resultType="board" parameterType="criteria">
+		 SELECT SEQ, WRITER, TITLE, REGDATE, VIEWCNT, RCOUNT
+         FROM 
+			(SELECT  RANK() OVER(ORDER BY REGDATE DESC) RN,
+			      SPRING_BOARD_TBL.SEQ, 
+			      SPRING_BOARD_TBL.TITLE, 
+			      SPRING_BOARD_TBL.WRITER, 
+			      REGDATE, 
+			      SPRING_BOARD_TBL.VIEWCNT,
+			      NVL(CNT, 0) AS RCOUNT
+				   FROM   SPRING_BOARD_TBL
+				   LEFT JOIN (
+				   		SELECT SEQ, COUNT(*) AS CNT FROM SPRING_BOARD_REPLY_TBL GROUP BY SEQ
+				   ) RE
+				   ON        SPRING_BOARD_TBL.seq = RE.seq
+				   GROUP BY SPRING_BOARD_TBL.seq, SPRING_BOARD_TBL.TITLE, SPRING_BOARD_TBL.WRITER, REGDATE, SPRING_BOARD_TBL.VIEWCNT, RE.CNT
+				   ORDER BY SPRING_BOARD_TBL.seq   DESC)
+		WHERE RN BETWEEN (#{pageNum} - 1) * #{amount} AND #{pageNum} * #{amount} 
+	
 	</select>
 	<select id="addViewCount" resultType="int">
 		UPDATE	SPRING_BOARD_TBL
@@ -24,7 +41,7 @@
 		WHERE SEQ = #{ seq }
 	</select>
 	<select id="selectOne" parameterType="board" resultType="board">
-		SELECT	 SEQ, TITLE, CONTENT, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
+		SELECT	 SEQ, TITLE, CONTENT, WRITER, REGDATE, VIEWCNT
 		FROM	 SPRING_BOARD_TBL
 		WHERE	 SEQ = #{ seq }
 	</select>
@@ -34,7 +51,7 @@
 		VALUES   (BOARD_SEQ.NEXTVAL, #{ title }, #{ content }, #{ writer }, DEFAULT, DEFAULT)
 	</select>
 	<select id="searchAjax" parameterType="map" resultType="board">
-		SELECT	 SEQ, TITLE, CONTENT, WRITER, TO_CHAR(REGDATE, 'RRRR"년" MM"월" DD"일" MI"분" SS"초"') AS REGDATE, VIEWCNT
+		SELECT	 SEQ, TITLE, CONTENT, WRITER, REGDATE, VIEWCNT
 		FROM	 SPRING_BOARD_TBL
 		<where>
 			<if test="type == 'title'">

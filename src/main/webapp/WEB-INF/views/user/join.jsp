@@ -46,7 +46,7 @@
 			<!-- <form id="loginForm" action="join.sinc" method="post" enctype="multipart/form-data"> -->
 			<form id="loginForm" action="join.sinc" method="post">
 				<div class="form-group has-feedback">
-					<input type="text" name="id" class="form-control"
+					<input type="text" id="id" name="id" class="form-control"
 						placeholder="USER ID" /> <span
 						class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
@@ -96,6 +96,11 @@
       $(function () {
     	  
     	$('#submitBtn').click(function(){
+    		
+    		id = $("#id");
+    		id.val(id.val().replace(/\s/g,''));
+    		console.log(id);
+    		
     		let pwd = $('#pwd').val();
     		let pwd2 = $('#pwd2').val();
     		if(pwd != pwd2) {

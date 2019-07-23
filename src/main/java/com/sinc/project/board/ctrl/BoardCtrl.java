@@ -2,7 +2,6 @@ package com.sinc.project.board.ctrl;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sinc.project.board.model.service.BoardServiceImpl;
 import com.sinc.project.model.model.vo.BoardVO;
+import com.sinc.project.pagination.Criteria;
+import com.sinc.project.pagination.PageDTO;
 import com.sinc.project.test.model.vo.UserVO;
 
 @Controller
@@ -26,10 +27,13 @@ public class BoardCtrl {
 	private BoardServiceImpl service;
 	
 	@RequestMapping("/listPage.sinc")
-	public String listPage(Model model) {
-		List<BoardVO> list = service.selectAll();
-		model.addAttribute("list", list);
+	public String listPage(Model model, Criteria cri) {
+		List<BoardVO> list = service.selectAll(cri);
+		int total = service.totalCount();
+		PageDTO page = new PageDTO(cri, total);
 		
+		model.addAttribute("list", list);
+		model.addAttribute("page", page);
 		
 		/*
 		 * Map<String, Integer> param = new HashMap(); param.put("firstPageNo", 1);
@@ -57,7 +61,7 @@ public class BoardCtrl {
 		BoardVO vo = new BoardVO(seq);
 		BoardVO board = service.selectOne(vo);
 		service.addViewCnt(board);
-		System.out.println(board.getRlist());
+		System.out.println();
 		
 		model.addAttribute("board", board);
 		return "/board/readPage";
@@ -69,6 +73,13 @@ public class BoardCtrl {
 	
 	@RequestMapping(value="/registerBoard.sinc", method=RequestMethod.POST)
 	public String registerBoard(BoardVO vo) {
+		
+		String content = vo.getContent();
+		content = content.replace("script", "");
+		content = content.replace("onerror", "");
+		content = content.replace("textarea", "");
+		vo.setContent(content);
+		
 		int result = service.insert(vo);
 		
 		if(result != 0 ) {

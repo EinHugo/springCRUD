@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sinc.project.board.model.sql.BoardDAO;
 import com.sinc.project.model.model.vo.BoardVO;
+import com.sinc.project.pagination.Criteria;
 
 @Service("boardServiceImpl")
 public class BoardServiceImpl implements BoardService {
@@ -16,8 +17,8 @@ public class BoardServiceImpl implements BoardService {
 	@Resource(name="boardDAOImpl")
 	private BoardDAO dao;
 	
-	public List<BoardVO> selectAll() {
-		return dao.selectAllBoard();
+	public List<BoardVO> selectAll(Criteria cri) {
+		return dao.selectAllBoard(cri);
 	}
 	
 	public BoardVO selectOne(BoardVO vo) {
@@ -47,6 +48,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int addViewCnt(BoardVO obj) {
 		return dao.addViewCount(obj);
+	}
+
+	@Override
+	public int totalCount() {
+		return dao.totalCount();
 	}
 	
 

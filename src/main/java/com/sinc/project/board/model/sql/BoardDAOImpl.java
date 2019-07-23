@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sinc.project.model.model.vo.BoardVO;
 import com.sinc.project.model.model.vo.ReplyVO;
+import com.sinc.project.pagination.Criteria;
 
 @Service("boardDAOImpl")
 public class BoardDAOImpl implements BoardDAO {
@@ -17,8 +18,8 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSession session;
 	
 	@Override
-	public List<BoardVO> selectAllBoard() {
-		return session.selectList("com.sinc.board.selectAll");
+	public List<BoardVO> selectAllBoard(Criteria cri) {
+		return session.selectList("com.sinc.board.selectAll", cri);
 	}
 	
 	@Override
@@ -53,6 +54,11 @@ public class BoardDAOImpl implements BoardDAO {
 	public int addViewCount(BoardVO vo) {
 		System.out.println("addViewCount");
 		return session.update("com.sinc.board.addViewCount", vo);
+	}
+
+	@Override
+	public int totalCount() {
+		return session.selectOne("com.sinc.board.countBoard");
 	}
 	
 

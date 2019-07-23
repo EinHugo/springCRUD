@@ -1,5 +1,8 @@
 package com.sinc.project.model.model.vo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class BoardVO {
@@ -7,6 +10,8 @@ public class BoardVO {
 	private String  title, content, writer, regdate;
 	private int		viewcnt;
 	private int 	rcount;
+	private boolean newFlag;
+	
 	public int getRcount() {
 		return rcount;
 	}
@@ -22,6 +27,8 @@ public class BoardVO {
 		this.viewcnt = viewcnt;
 		this.rcount = rcount;
 		this.rlist = rlist;
+		this.newFlag = false;
+		
 	}
 
 	public void setRcount(int rcount) {
@@ -92,6 +99,21 @@ public class BoardVO {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+		try {
+			Date regdateFormat =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(regdate);
+			long diff = Math.abs((new Date().getTime() - regdateFormat.getTime()) / 60000);
+			
+			if(diff < 30) {
+				this.newFlag = true;
+			} else {
+				this.newFlag = false;
+			}
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 
@@ -113,13 +135,25 @@ public class BoardVO {
 		this.writer = writer;
 		this.regdate = regdate;
 		this.viewcnt = viewcnt;
+		this.newFlag = false;
+		
 	}
 
 	@Override
 	public String toString() {
 		return "BoardVO [seq=" + seq + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", regdate=" + regdate + ", viewcnt=" + viewcnt + "]";
+				+ ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", newFlag=" + newFlag + "]";
 	}
+
+	public boolean isNewFlag() {
+		return newFlag;
+	}
+
+	public void setNewFlag(boolean newFlag) {
+		this.newFlag = newFlag;
+	}
+
+
 	
 }
 
