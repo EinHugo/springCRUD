@@ -51,13 +51,22 @@ pageEncoding="UTF-8"%>
                                     <c:if test="${boardVO.newFlag}">
                                     	<span class="badge badge-primary" style="background-color: #dc3545">New</span>
                                     </c:if>
-                                        
-                                     
-                                     ${boardVO.title} (${ boardVO.rcount })
-                                     
+                                    <c:if test='${ boardVO.writer == "administrator" }'>
+										<span style="font-weight: 600; color: #dc3545"> ${boardVO.title} (${ boardVO.rcount })</span>
+									</c:if>
+                                    <c:if test='${ boardVO.writer != "administrator" }'>
+										${boardVO.title} (${ boardVO.rcount })
+									</c:if>
                                  </a>
                              </td>
-                            <td>${boardVO.writer}</td>
+                            <td>
+                            	<c:if test='${ boardVO.writer == "administrator" }'>
+									<span style="font-weight: 600; color: #dc3545"> ${boardVO.writer}</span>
+								</c:if>	
+								<c:if test='${ boardVO.writer != "administrator" }'>
+									 ${boardVO.writer}
+								</c:if>	
+                            </td>
                             <td>${boardVO.regdate}</td>
                             <td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
                         </tr>

@@ -72,20 +72,27 @@ public class BoardCtrl {
 	public void register() {}
 	
 	@RequestMapping(value="/registerBoard.sinc", method=RequestMethod.POST)
-	public String registerBoard(BoardVO vo) {
+	public String registerBoard(BoardVO vo, HttpSession session) {
 		
-		String content = vo.getContent();
-		content = content.replace("script", "");
-		content = content.replace("onerror", "");
-		content = content.replace("textarea", "");
-		vo.setContent(content);
+		UserVO user  = (UserVO)session.getAttribute("loginUser");
+		int result = -1;
 		
-		int result = service.insert(vo);
+		if(user.getId().equals(vo.getWriter())) {
+			String content = vo.getContent();
+			content = content.replace("script", "");
+			content = content.replace("onerror", "");
+			content = content.replace("textarea", "");
+			vo.setContent(content);
+			
+			result = service.insert(vo);
+		}
 		
-		if(result != 0 ) {
+		System.out.println("BoardCtrl#result : " + result);
+		
+		if(result > 0 ) {
 			return "redirect:/board/listPage.sinc";
 		} else {
-			return "/board/register.sinc";
+			return "redirect:/board/register.sinc";
 		}
 	}
 	

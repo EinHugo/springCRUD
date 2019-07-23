@@ -94,10 +94,16 @@
 			<c:forEach items="${board.rlist}" var="reply">
 				
 				<li class="time-label">
-					${reply.rwriter} : ${reply.rtext}
+					<c:if test="${ reply.rwriter == 'administrator' }">
+						<p style="font-weight: 600; color: #dc3545">${reply.rwriter} : ${reply.rtext}</p>
+					</c:if>
+					<c:if test="${ reply.rwriter != 'administrator' }">
+						${reply.rwriter} : ${reply.rtext}
+					</c:if>
+					
 					<%-- ${reply.rtext} --%>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="javascript:removeReply(${reply.rseq},${reply.seq})">X</a>
+					<%-- <a href="javascript:removeReply(${reply.rseq},${reply.seq})">X</a> --%>
 				</li>
 			</c:forEach>
 			

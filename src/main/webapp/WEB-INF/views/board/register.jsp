@@ -22,7 +22,7 @@
 			<input type="text"
 				name='title' class="form-control" placeholder="Enter Title">
 		</div>
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">이미지 링크 추가</button>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">링크 추가</button>
 		<div class="form-group">
 			<label for="exampleInputPassword1">Content</label>
 			<textarea id="imageArea" class="form-control" name="content" rows="12"
@@ -45,20 +45,21 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">이미지 링크 추가</h5>
+        <h5 class="modal-title" id="exampleModalLabel">이미지 / 링크 링크 추가</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
          <div class="form-group">
-           <label for="message-text" class="col-form-label">이미지 URL:</label>
+           <label for="message-text" class="col-form-label">이미지 / 링크 URL:</label>
            <textarea class="form-control" id="imageLink"></textarea>
          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
         <button type="button" id="addImage" class="btn btn-primary">이미지 추가</button>
+        <button type="button" id="addLink" class="btn btn-primary">링크 추가</button>
       </div>
     </div>
   </div>
@@ -96,6 +97,13 @@ $("#submitBtn").on("click", function(e){
 
 $("#addImage").on("click", function(){
 	let imageHTML = '<center><img src="' + $("#imageLink").val() + '" style="width: 80%;" /></center>';
+	
+	$("#imageArea").val( $("#imageArea").val() + imageHTML);
+	$("#exampleModal").modal('hide');
+});
+
+$("#addLink").on("click", function(){
+	let imageHTML = '<a href="' + $("#imageLink").val() + '" />' + $("#imageLink").val() + '</a>';
 	
 	$("#imageArea").val( $("#imageArea").val() + imageHTML);
 	$("#exampleModal").modal('hide');
