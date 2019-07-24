@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sinc.listener.SessionCounterListener;
 import com.sinc.project.board.model.service.BoardServiceImpl;
 import com.sinc.project.model.model.vo.BoardVO;
 import com.sinc.project.pagination.Criteria;
@@ -34,6 +35,8 @@ public class BoardCtrl {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", page);
+		
+		addSessionCount(model);
 		
 		/*
 		 * Map<String, Integer> param = new HashMap(); param.put("firstPageNo", 1);
@@ -56,12 +59,11 @@ public class BoardCtrl {
 			model.addAttribute("userSignedIn", false);
 		}
 		
-		
+		addSessionCount(model);
 		
 		BoardVO vo = new BoardVO(seq);
 		BoardVO board = service.selectOne(vo);
 		service.addViewCnt(board);
-		System.out.println();
 		
 		model.addAttribute("board", board);
 		return "/board/readPage";
@@ -69,7 +71,9 @@ public class BoardCtrl {
 	}
 	
 	@RequestMapping(value="/register.sinc", method=RequestMethod.GET)
-	public void register() {}
+	public void register(Model model) {
+		addSessionCount(model);
+	}
 	
 	@RequestMapping(value="/registerBoard.sinc", method=RequestMethod.POST)
 	public String registerBoard(BoardVO vo, HttpSession session) {
@@ -77,7 +81,8 @@ public class BoardCtrl {
 		UserVO user  = (UserVO)session.getAttribute("loginUser");
 		int result = -1;
 		
-		if(user.getId().equals(vo.getWriter())) {
+		
+		if(user != null && user.getId().equals(vo.getWriter())) {
 			String content = vo.getContent();
 			content = content.replace("script", "");
 			content = content.replace("onerror", "");
@@ -101,6 +106,7 @@ public class BoardCtrl {
 		System.out.println("modifyPage.sinc");
 		BoardVO board = service.selectOne(vo);
 		model.addAttribute("board", board);
+		addSessionCount(model);
 		return "/board/modifyPage";
 	}
 	
@@ -135,4 +141,10 @@ public class BoardCtrl {
 		return result;
 	}
 	
+	public void addSessionCount(Model model) {
+		int sessionCount = SessionCounterListener.getActiveSessions();
+		
+		System.out.println("현재 접속자 수 : " + sessionCount + " 명");
+		model.addAttribute("sessionCount", sessionCount);
+	}
 }

@@ -48,7 +48,7 @@ public class UserCtrl {
 		
 		System.out.println("UserCtrl#logout");
 		status.setComplete();
-		session.invalidate();
+		/* session.invalidate(); */
 		return "redirect:/index.sinc";
 		
 	}

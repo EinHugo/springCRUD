@@ -7,7 +7,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>우와아아아ㅏ</title>
+    <title>우아아아</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -41,7 +41,9 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>\(o_o)/</b></span>
+          <c:if test="${ sessionCount != null }">
+          	<span class="logo-lg"><b>현재 접속자 : ${ sessionCount }</b></span>
+          </c:if>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
