@@ -8,10 +8,10 @@
 		SELECT 	ID, PWD, NAME 
 		FROM	SPRING_TEST_MEM_TBL
 	</select>
-	<select id="insert" parameterType="test">
+	<insert id="insert" parameterType="test">
 		INSERT INTO SPRING_TEST_MEM_TBL
 		VALUES(#{id}, #{pwd}, #{name})
-	</select>
+	</insert>
 </mapper>  
 
 

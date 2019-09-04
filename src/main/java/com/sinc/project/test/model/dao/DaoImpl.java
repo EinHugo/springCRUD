@@ -17,8 +17,8 @@ public class DaoImpl {
 	
 	public void sampleRow() {
 		System.out.println("dao sampleRow");
-		TestVO vo = new TestVO("sinc", "sinc", "신세계");
-//		int flag = session.insert("com.sinc.test.insert", vo);
-//		System.out.println(flag);
+		TestVO vo = new TestVO("sinc", "sinc", "?�세�?);
+		int flag = session.insert("com.sinc.test.insert", vo);
+		System.out.println(flag);
 	}
 }
